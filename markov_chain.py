@@ -2,7 +2,8 @@ from __future__ import division
 
 def markov_chain_prob(Q, A, pi, sequence):
     '''
-    Define a Markov Chain
+    Define a (1st Order) Markov Chain 
+    (e.g., transition probablities depend ONLY on current state)
     
     @param Q (list):
       the set of N states [q1, q2, ..., qN]
