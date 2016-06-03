@@ -43,7 +43,7 @@ def hmm_forward(Q, A, B, Obs, pi):
 
     # Initialize first column of lattice (time = 0; start)
     for q in range(N):
-        lattice[q, 0] = pi[q] * B[Obs[0]][q]
+        lattice[q, 0] = pi[q] * B[Obs[0], q]
 
     # Fill in the rest of the lattice
     for t in range(1, T):
@@ -58,7 +58,7 @@ def hmm_forward(Q, A, B, Obs, pi):
                 a = A[q2, q]
                 # b = the probability of a given observation given the current
                 # state
-                b = B[Obs[t]][q2]
+                b = B[Obs[t], q2]
                 # The probability of being at a current state given a prior
                 # state is thus alpha * a * b; sum over all possible prior
                 # states
