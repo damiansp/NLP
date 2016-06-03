@@ -51,9 +51,17 @@ def hmm_forward(Q, A, B, Obs, pi):
             node_val = 0
 
             for q2 in range(N):
+                # alpha = the value at the nodes in the previous column
                 alpha = lattice[q2, t -1]
+                # a = the probability of being at current state given a
+                # previous state
                 a = A[q2, q]
+                # b = the probability of a given observation given the current
+                # state
                 b = B[Obs[t]][q2]
+                # The probability of being at a current state given a prior
+                # state is thus alpha * a * b; sum over all possible prior
+                # states
                 node_val += (alpha * a * b)
 
             lattice[q, t] = node_val
@@ -91,4 +99,6 @@ H2 = hmm_forward(Q, A, B, Obs2, pi)
 print 'Hypothesis 1 Probability Matrix:\n', H1
 print 'Hypothesis 2 Probability Matrix:\n', H2
 
-# TO DO: Hand check a small set to make sure calculations came out correctly
+# TO DO:
+# Hand check a small set to make sure calculations came out correctly
+# See if vectorization can be done to improve efficiency
