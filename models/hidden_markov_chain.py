@@ -47,12 +47,13 @@ def hmm_forward(Q, A, B, Obs, pi):
 
     # Fill in the rest of the lattice
     for t in range(1, T):
+        # q: state at time t - 1
         for q in range(N):
             node_val = 0
-
+            # q2: state at time t
             for q2 in range(N):
                 # alpha = the value at the nodes in the previous column
-                alpha = lattice[q2, t -1]
+                alpha = lattice[q, t - 1]
                 # a = the probability of being at current state given a
                 # previous state
                 a = A[q2, q]
