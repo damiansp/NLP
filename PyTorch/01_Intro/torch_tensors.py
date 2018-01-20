@@ -31,3 +31,28 @@ print(x.numpy())
 
 
 # Declaring/casting data types
+x = torch.FloatTensor([[1, 2, 3],
+                       [4, 5, 6],
+                       [7, 8, 9]])
+print(x)
+
+x = x.long()
+print(x)
+print(x.size())
+
+
+# Tensor Operations
+x = torch.rand(3, 4)
+print(x)
+
+y = torch.add(x, x)
+print(y)
+
+z = y + y
+print(z)
+
+print(torch.sum(x, dim=0)) # col sums
+
+
+
+# Indexing
