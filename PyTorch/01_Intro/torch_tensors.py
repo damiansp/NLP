@@ -98,3 +98,16 @@ print(x.grad)
 
 
 # CUDA Tensors
+print(torch.cuda.is_available())
+if torch.cuda.is_available():
+    a = torch.rand(3, 3).cuda()
+    print(a)
+
+    # NOTE: cuda tensors and regular tensors cannot interact with each other
+    # To get them to interact, the tensors must be available on the same device:
+    a = a.cpu() # copy to CPU
+    b = torch.rand(3, 3)
+    print(a + b)
+
+
+    
