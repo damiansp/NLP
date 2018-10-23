@@ -1,5 +1,20 @@
-.python-version
-*.pyc
+# OS
+#------------------------
+.DS_Store
 *~
 
+
+# Python/Jupyter
+#------------------------
+.python-version
+*.pyc
+
+
+# Dirs
+#------------------------
 data/
+
+
+# Files
+#------------------------
+*.txt
