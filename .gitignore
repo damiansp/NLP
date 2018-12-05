@@ -8,6 +8,7 @@
 #------------------------
 .python-version
 *.pyc
+.ipynb_checkpoints/
 
 
 # Dirs
