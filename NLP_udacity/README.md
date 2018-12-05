@@ -1,9 +1,11 @@
-# REPO is cloned from Udacity Repo at https://github.com/udacity/AIND-NLP
+# NLP_udacity
+This repo is cloned from Udacity's Repo at https://github.com/udacity/AIND-NLP
 All code in the `mine` directory is my own (excluding starter code which is left in its original state outside of `mine`).
 
 -Damian Satterthwaite-Phillips
 
 Content below this line from original README
+
 ----------------------------------------------------------------------
 
 # AIND: Natural Language Processing
