@@ -14,10 +14,10 @@
 # Dirs
 #------------------------
 data/
-NLP_udacity/.git*
-NLP_udacity/nltk_data/
-NLP_udacity/cache/
-NLP_udacity/data/
+udacity/.git*
+udacity/nltk_data/
+udacity/cache/
+udacity/data/
 
 
 # Files
