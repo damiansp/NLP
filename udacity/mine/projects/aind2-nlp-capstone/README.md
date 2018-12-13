@@ -1,3 +1,10 @@
+# Disclaimer
+
+Directory copied in from <a href="https://github.com/udacity/aind2-nlp-capstone>Udacity</a> and can be found in its original form there.  Boilerplate code and dependencies from their original repo.  Additions and completion of the `machine_translation` notebook are my original contributions.
+
+Content below this line from original Udacity repo.
+-------------------------------------------------------------------------------
+
 # Introduction
 In this notebook, you will build a deep neural network that functions as part of an end-to-end machine translation pipeline. Your completed pipeline will accept English text as input and return the French translation.
 
