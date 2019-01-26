@@ -1,3 +1,6 @@
+import re
+
+
 def make_ngrams(text, max_n):
     text = text.split()
     ngrams = {}
@@ -12,7 +15,19 @@ def make_ngrams(text, max_n):
     return ngrams
 
 
-text = 'demonstrate that your bigram model does not assign a single ' \
-       'probability distribution across all sentence lengths'
+def cap_sentences(text):
+    text = re.split('[\.\?!;]', text)
+    if text[-1] == '':
+        text = text[:-1]
+    text = [f'<s> {s} </s>' for s in text]
+    return re.sub('\s+', ' ', ' '.join(text)).strip().lower()
 
-print(make_ngrams(text, 3))
+
+text = 'Demonstrate that your bigram model does not assign a single ' \
+       'probability distribution across all sentence lengths.  Why would you ' \
+       'do such a thing?  The reasons are twofold.  Because it\'s fun; ' \
+       'because you\'ll love it. Now get to work!'
+
+capped = (cap_sentences(text))
+print(capped)
+print(make_ngrams(capped, 3))
