@@ -25,6 +25,7 @@ udacity/data/
 # Files
 #------------------------
 *.txt
+*.tsv
 *.h5
 # Byte-compiled / optimized / DLL files
 __pycache__/
