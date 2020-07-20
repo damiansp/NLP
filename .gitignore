@@ -9,6 +9,7 @@
 .python-version
 *.pyc
 .ipynb_checkpoints/
+__pycache__/
 
 
 # Dirs
@@ -24,11 +25,11 @@ udacity/data/
 
 # Files
 #------------------------
-*.txt
-*.tsv
+*.csv
 *.h5
-# Byte-compiled / optimized / DLL files
-__pycache__/
+*.tsv
+*.txt
+*.pkl
 *.py[cod]
 *$py.class
 
