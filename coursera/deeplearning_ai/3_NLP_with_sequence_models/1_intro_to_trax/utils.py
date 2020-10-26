@@ -1,0 +1,173 @@
+import json
+import re
+import string
+
+import matplotlib.pyplot as plt
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+from nltk.tokenize import TweetTokenizer
+import numpy as np
+import pandas as pd
+
+
+def process_tweet(tweet):
+    '''
+    Input:
+        tweet: a string containing a tweet
+    Output:
+        tweets_clean: a list of words containing the processed tweet
+
+    '''
+    stemmer = PorterStemmer()
+    stopwords_english = stopwords.words('english')
+    # remove stock market tickers like $GE
+    tweet = re.sub(r'\$\w*', '', tweet)
+    # remove old style retweet text "RT"
+    tweet = re.sub(r'^RT[\s]+', '', tweet)
+    # remove hyperlinks
+    tweet = re.sub(r'https?:\/\/.*[\r\n]*', '', tweet)
+    # remove hashtags
+    # only removing the hash # sign from the word
+    tweet = re.sub(r'#', '', tweet)
+    # tokenize tweets
+    tokenizer = TweetTokenizer(
+        preserve_case=False, strip_handles=True, reduce_len=True)
+    tweet_tokens = tokenizer.tokenize(tweet)
+    tweets_clean = []
+    for word in tweet_tokens:
+        if (word not in stopwords_english        # remove stopwords
+            and word not in string.punctuation): # remove punctuation
+            # tweets_clean.append(word)
+            stem_word = stemmer.stem(word)       # stemming word
+            tweets_clean.append(stem_word)
+    return tweets_clean
+
+
+def load_tweets(twitter_samples):
+    pos = twitter_samples.strings('positive_tweets.json')
+    neg = twitter_samples.strings('negative_tweets.json')
+    return pos, neg
+
+
+class Layer:
+    '''Base class for Layers'''
+    def __init__(self):
+        self.weights = None
+
+    def forward(self, x):
+        raise NotImplementedError
+
+    def init_weights_and_state(self, input_signature, random_key):
+        pass
+
+    def init(self, input_signature, random_key):
+        self.init_weights_and_state(input_signature, random_key)
+        return self.weights
+
+    def __call__(self, x):
+        return self.forward(x)
+
+
+def test_lookup(func):
+    freqs = {('sad', 0): 4,
+             ('happy', 1): 12,
+             ('oppressed', 0): 7}
+    word = 'happy'
+    label = 1
+    if func(freqs, word, label) == 12:
+        return 'SUCCESS!!'
+    return 'Failed Sanity Check!'
+
+
+def lookup(freqs, word, label):
+    '''
+    Input:
+        freqs: a dictionary with the frequency of each pair (or tuple)
+        word: the word to look up
+        label: the label corresponding to the word
+    Output:
+        n: the number of times the word with its corresponding label appears.
+    '''
+    n = 0  # freqs.get((word, label), 0)
+    pair = (word, label)
+    if (pair in freqs):
+        n = freqs[pair]
+    return n
+
+
+def get_all_tweets(directory, pos_neg):
+    path = f'{directory}/{pos_neg}_tweets.json'
+    all_tweets = []
+    with open(path) as f:
+        for line in f:
+            tweet = json.loads(line)
+            all_tweets.append(tweet['text'])
+    return all_tweets
+
+
+def get_dict(file_name):
+    '''
+    This function returns the english to french dictionary given a file where 
+    the each column corresponds to a word.
+    Check out the files this function takes in your workspace.
+    '''
+    my_file = pd.read_csv(file_name, delimiter=' ')
+    etof = {}  # the english to french dictionary to be returned
+    for i in range(len(my_file)):
+        en = my_file.loc[i][0]
+        fr = my_file.loc[i][1]
+        etof[en] = fr
+    return etof
+
+
+def cosine_similarity(A, B):
+    '''
+    Input:
+      A: a numpy array which corresponds to a word vector
+      B: A numpy array which corresponds to a word vector
+    Output:
+      cos: numerical number representing the cosine similarity between A and B.
+    '''
+    # you have to set this variable to the true label.
+    cos = -10
+    dot = np.dot(A, B)
+    norma = np.linalg.norm(A)
+    normb = np.linalg.norm(B)
+    cos = dot / (norma * normb)
+    return cos
+
+
+# Procedure to plot and arrows that represents vectors with pyplot
+def plot_vectors(
+        vectors, colors=['k', 'b', 'r', 'm', 'c'], axes=None, fname='image.svg',
+        ax=None):
+    scale = 1
+    scale_units = 'x'
+    x_dir = []
+    y_dir = []
+    for i, vec in enumerate(vectors):
+        x_dir.append(vec[0][0])
+        y_dir.append(vec[0][1])
+    if ax == None:
+        fig, ax2 = plt.subplots()
+    else:
+        ax2 = ax
+    if axes == None:
+        x_axis = 2 + np.max(np.abs(x_dir))
+        y_axis = 2 + np.max(np.abs(y_dir))
+    else:
+        x_axis = axes[0]
+        y_axis = axes[1]
+    ax2.axis([-x_axis, x_axis, -y_axis, y_axis])
+    for i, vec in enumerate(vectors):
+        ax2.arrow(0,
+                  0,
+                  vec[0][0],
+                  vec[0][1],
+                  head_width=0.05 * x_axis,
+                  head_length=0.05 * y_axis,
+                  fc=colors[i],
+                  ec=colors[i])
+    if ax == None:
+        plt.show()
+        fig.savefig(fname)
