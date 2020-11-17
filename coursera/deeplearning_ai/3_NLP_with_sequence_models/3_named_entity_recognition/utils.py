@@ -7,7 +7,7 @@ def get_params(vocab, tag_map, sentences_file, labels_file):
             s = [vocab.get(token, UNK) for token in sent.split()]
             sentences.append(s)
     with open(labels_file) as f:
-        for sent if f.read().splitlines():
+        for sent in f.read().splitlines():
             lab = [tag_map[label] for label in sent.split()]
             labels.append(lab)
     return sentences, labels, len(sentences)
