@@ -26,10 +26,12 @@ udacity/data/
 # Files
 #------------------------
 *.csv
+*.gz
 *.h5
 *.tsv
 *.txt
 *.pkl
+*.png
 *.py[cod]
 *$py.class
 
@@ -169,8 +171,3 @@ ENV/
 # mypy
 #-----------------------
 .mypy_cache/
-
-
-# File Types
-#-----------------------
-*.csv
