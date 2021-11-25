@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -9,7 +10,7 @@ class MultilayerPerceptron(nn.Module):
           input_dim, hidden_dim, output_dim (int): number of perceptrons in each
             layer (only one hidden layer).
         '''
-        super(MultilayerPerceptron, self).__init__()
+        super().__init__()
         self.fc1 = nn.Linear(input_dim, hidden_dim)
         self.fc2 = nn.Linear(hidden_dim, output_dim)
 
@@ -37,3 +38,17 @@ OUTPUT = 4
 
 mlp = MultilayerPerceptron(INPUT, HIDDEN, OUTPUT)
 print(mlp)
+
+
+# Test with random inputs
+def describe(x):
+    print(f'Type: {x.type()}')
+    print(f'Shape: {x.shape}')
+    print(f'Values:\n {x}')
+
+
+x_input = torch.rand(BATCH, INPUT)
+y_output = mlp(x_input)
+describe(x_input)
+describe(y_output)
+
