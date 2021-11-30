@@ -52,3 +52,6 @@ y_output = mlp(x_input)
 describe(x_input)
 describe(y_output)
 
+
+
+# Surname classifation with FFNN
