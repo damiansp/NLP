@@ -18,6 +18,7 @@ alt_repos/
 data/
 img/
 imgs/
+model_storage/
 udacity/.git*
 udacity/nltk_data/
 udacity/cache/
